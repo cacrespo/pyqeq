@@ -1,0 +1,62 @@
+{% extends 'game/base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-8">
+    <h2 class="text-3xl font-bold mb-2">Momento de la Verdad (y la Mentira)</h2>
+    <p class="text-gray-500 mb-8 italic">Escribí 3 cosas sobre vos. Dos deben ser mentiras y una la verdad absoluta. ¡No se las digas a nadie!</p>
+
+    {% if has_submitted %}
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-6 rounded-r-lg mb-8">
+            <h3 class="font-bold text-xl mb-2">¡Listo! Ya subiste tus frases.</h3>
+            <p>Esperando a que el resto de los jugadores termine de escribir sus engaños...</p>
+        </div>
+        
+        <div hx-get="{% url 'room_detail' room.code %}" hx-trigger="every 5s" hx-select="#content" hx-target="#content" hx-swap="outerHTML">
+             <div class="flex items-center justify-center py-4">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="text-gray-600">Actualizando...</span>
+             </div>
+        </div>
+    {% else %}
+        <form action="{% url 'submit_statements' room.code %}" method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="space-y-4">
+                <div class="p-4 border-2 border-gray-100 rounded-lg focus-within:border-blue-300 transition-colors">
+                    <label class="block text-sm font-semibold text-gray-500 mb-1">Frase #1</label>
+                    <textarea name="t1" required rows="2" class="w-full text-lg focus:outline-none resize-none" placeholder="Ej: Fui campeón de ajedrez en la primaria."></textarea>
+                    <div class="mt-2 flex items-center">
+                        <input type="radio" name="truth_index" value="1" required id="v1" class="mr-2">
+                        <label for="v1" class="text-sm text-gray-600">Es la verdad</label>
+                    </div>
+                </div>
+
+                <div class="p-4 border-2 border-gray-100 rounded-lg focus-within:border-blue-300 transition-colors">
+                    <label class="block text-sm font-semibold text-gray-500 mb-1">Frase #2</label>
+                    <textarea name="t2" required rows="2" class="w-full text-lg focus:outline-none resize-none" placeholder="Ej: Me caí de un camello en Egipto."></textarea>
+                    <div class="mt-2 flex items-center">
+                        <input type="radio" name="truth_index" value="2" required id="v2" class="mr-2">
+                        <label for="v2" class="text-sm text-gray-600">Es la verdad</label>
+                    </div>
+                </div>
+
+                <div class="p-4 border-2 border-gray-100 rounded-lg focus-within:border-blue-300 transition-colors">
+                    <label class="block text-sm font-semibold text-gray-500 mb-1">Frase #3</label>
+                    <textarea name="t3" required rows="2" class="w-full text-lg focus:outline-none resize-none" placeholder="Ej: Programo en COBOL por las noches."></textarea>
+                    <div class="mt-2 flex items-center">
+                        <input type="radio" name="truth_index" value="3" required id="v3" class="mr-2">
+                        <label for="v3" class="text-sm text-gray-600">Es la verdad</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition-all hover:scale-[1.02] active:scale-100">
+                🚀 Enviar Mis Engaños
+            </button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

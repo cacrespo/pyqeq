@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Turing's Bluff{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <nav class="gradient-bg text-white shadow-lg p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'home' %}" class="text-2xl font-bold tracking-tight">🐍 pyqeq</a>
+            <div id="user-info" class="text-sm">
+                {% if player %}
+                    <span class="bg-blue-800 px-3 py-1 rounded-full">{{ player.name }} @ {{ player.room.code }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto mt-8 px-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center mt-12 pb-8 text-gray-500 text-sm">
+        PyCamp 2026 - Hecho con 🤖 y Python
+    </footer>
+</body>
+</html>

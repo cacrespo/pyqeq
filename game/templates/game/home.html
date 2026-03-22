@@ -1,0 +1,41 @@
+{% extends 'game/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8">
+    <div class="text-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">🐍 pyqeq</h1>
+        <p class="text-lg text-gray-600 mb-8">2 Mentiras, 1 Verdad. ¿Podrás descubrir al autor?</p>
+        
+        <div class="space-y-6">
+            <!-- Create Room -->
+            <form action="{% url 'home' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="action" value="create" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                    Crear Nueva Sala
+                </button>
+            </form>
+
+            <div class="relative flex py-5 items-center">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="flex-shrink mx-4 text-gray-400">o unite a una</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <!-- Join Room -->
+            <form action="{% url 'join_room' 'placeholder' %}" method="post" id="join-form" 
+                  onsubmit="this.action=this.action.replace('placeholder', this.room_code.value)">
+                {% csrf_token %}
+                <div class="flex space-x-2">
+                    <input type="text" name="room_code" placeholder="CÓDIGO" required
+                           class="flex-grow border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase">
+                    <button type="submit" 
+                            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                        Unirse
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

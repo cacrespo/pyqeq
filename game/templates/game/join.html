@@ -1,0 +1,33 @@
+{% extends 'game/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-8">
+    <h2 class="text-2xl font-bold mb-6 text-center">Unirse a la sala <span class="text-blue-600">{{ room.code }}</span></h2>
+    
+    <form action="{% url 'join_room' room.code %}" method="post" class="space-y-6">
+        {% csrf_token %}
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="player_name">
+                Pseudónimo (ej: "PythoneroNinja")
+            </label>
+            <p class="text-xs text-gray-500 mb-2">Este nombre será el que todos vean durante el juego.</p>
+            <input type="text" name="player_name" id="player_name" required
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="real_name">
+                Tu Nombre Real (ej: "Carlos Crespo")
+            </label>
+            <p class="text-xs text-gray-500 mb-2">Este nombre solo se revelará en la pantalla de resultados final.</p>
+            <input type="text" name="real_name" id="real_name" required
+                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        
+        <button type="submit" 
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200">
+            ¡Entrar a la sala!
+        </button>
+    </form>
+</div>
+{% endblock %}
